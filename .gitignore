@@ -6,7 +6,8 @@ js/yarn-error.log*
 # Python
 __pycache__/
 *.py[cod]
-python/*.egg-info/
+python/*.egg-info
+python/sdk/*.egg-info
 python/dist/
 python/build/
 
