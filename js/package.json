@@ -1,8 +1,8 @@
-{
+﻿{
   "name": "nexa-sdk-js",
   "version": "1.0.0",
   "private": true,
-  "description": "JavaScript SDK for Nexa Languages API",
+  "description": "JavaScript SDK for Nexa Languages and LLMs",
   "license": "MIT",
   "type": "module",
   "main": "dist/languages.js",
@@ -21,3 +21,4 @@
     "typescript": "^5.4.0"
   }
 }
+
