@@ -7,8 +7,7 @@ setup(
     author="Your Name",
     author_email="you@example.com",
     url="https://github.com/yourusername/nexa-sdk",
-    packages=find_packages(where="sdk"),
-    package_dir={"": "sdk"},
+    packages=find_packages(),  # discovers 'sdk' at python/sdk
     install_requires=[
         "requests>=2.31.0",
     ],

@@ -1,10 +1,12 @@
 # Nexa SDK
 
-SDKs for interacting with the Nexa Languages API in JavaScript, Python, and Java.
+SDKs for interacting with the Nexa Languages and Voices APIs in JavaScript, Python, and Java.
 
 Endpoints covered:
 - GET `/languages` (optional `voice_model_id`)
 - GET `/languages/{id}`
+- GET `/voices` (filters: `provider_name`, `accent`, `gender`, `name`, `page`, `limit`)
+- GET `/voices/{id}`
 
 OpenAPI spec is at `openapi/swagger.json`.
 
@@ -24,6 +26,7 @@ npm run build
 
 ```ts
 import { listLanguages, getLanguageById } from "./dist/languages.js";
+import { listVoices, getVoiceById } from "./dist/voices.js"; // after build
 
 const apiKey = process.env.NEXA_API_KEY || "YOUR_API_KEY";
 
@@ -36,6 +39,20 @@ console.log(list.languages);
 // Get one language by ID
 const lang = await getLanguageById({ apiKey, id: "language_456" });
 console.log(lang);
+
+// List voices with filters
+const voices = await listVoices({
+  apiKey,
+  provider_name: "elevenlabs",
+  gender: "female",
+  page: 1,
+  limit: 20,
+});
+console.log(voices);
+
+// Get one voice by ID
+const voice = await getVoiceById({ apiKey, id: "voice_123" });
+console.log(voice);
 ```
 
 ---
@@ -52,7 +69,7 @@ pip install -e .
 ### Usage
 
 ```python
-from sdk import LanguagesClient
+from sdk import LanguagesClient, VoicesClient
 
 client = LanguagesClient(api_key="YOUR_API_KEY")
 
@@ -66,6 +83,15 @@ for lang in resp.languages:
 # Get one language by ID
 lang = client.get_language_by_id(language_id="language_456")
 print(lang)
+
+# Voices
+voices_client = VoicesClient(api_key="YOUR_API_KEY")
+resp = voices_client.list_voices(provider_name="elevenlabs", gender="female", page=1, limit=20)
+for v in resp.voices:
+    print(v.id, v.name)
+
+one = voices_client.get_voice_by_id(voice_id="voice_123")
+print(one)
 ```
 
 ---
@@ -87,6 +113,9 @@ cd java
 import com.nexa.sdk.LanguagesClient;
 import com.nexa.sdk.LanguagesResponse;
 import com.nexa.sdk.Language;
+import com.nexa.sdk.VoicesClient;
+import com.nexa.sdk.VoicesResponse;
+import com.nexa.sdk.Voice;
 
 LanguagesClient client = new LanguagesClient(System.getenv("NEXA_API_KEY"));
 
@@ -97,6 +126,14 @@ for (Language l : list.getLanguages()) {
 
 Language lang = client.getLanguageById("language_456");
 System.out.println(lang.getName());
+
+VoicesClient vClient = new VoicesClient(System.getenv("NEXA_API_KEY"));
+VoicesResponse vList = vClient.listVoices("elevenlabs", null, "female", null, 1, 20);
+for (Voice v : vList.getVoices()) {
+    System.out.println(v.getId() + ": " + v.getName());
+}
+Voice v1 = vClient.getVoiceById("voice_123");
+System.out.println(v1.getName());
 ```
 
 ---
