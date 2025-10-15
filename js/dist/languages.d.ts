@@ -13,7 +13,7 @@ export type ClientConfig = {
     timeoutMs?: number;
 };
 export declare function listLanguages({ apiKey, voiceModelId, baseUrl, timeoutMs, }: ClientConfig & {
-    voiceModelId: string;
+    voiceModelId?: string;
 }): Promise<LanguagesResponse>;
 export declare function getLanguageById({ apiKey, id, baseUrl, timeoutMs, }: ClientConfig & {
     id: string;

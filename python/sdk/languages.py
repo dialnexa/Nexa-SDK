@@ -6,13 +6,15 @@ import requests
 
 @dataclass
 class Language:
-    code: str
-    name: str
+    id: Optional[str] = None
+    code: str = ""
+    name: str = ""
     native_name: Optional[str] = None
 
     @staticmethod
     def from_dict(payload: Dict[str, Any]) -> "Language":
         return Language(
+            id=payload.get("id"),
             code=str(payload.get("code")),
             name=str(payload.get("name")),
             native_name=payload.get("nativeName") or payload.get("native_name"),

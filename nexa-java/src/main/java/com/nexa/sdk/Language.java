@@ -5,12 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Language {
+    private String id;
     private String code;
     private String name;
     @JsonProperty("nativeName")
     private String nativeName;
 
     public Language() {}
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getCode() { return code; }
     public void setCode(String code) { this.code = code; }
@@ -21,4 +25,3 @@ public class Language {
     public String getNativeName() { return nativeName; }
     public void setNativeName(String nativeName) { this.nativeName = nativeName; }
 }
-

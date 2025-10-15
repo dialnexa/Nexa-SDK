@@ -47,7 +47,16 @@ public class LanguagesClient {
                 .build();
         HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
         ensureSuccess(resp);
-        return mapper.readValue(resp.body(), LanguagesResponse.class);
+        String body = resp.body();
+        var node = mapper.readTree(body);
+        if (node.isArray()) {
+            var listType = mapper.getTypeFactory().constructCollectionType(java.util.List.class, Language.class);
+            java.util.List<Language> langs = mapper.readValue(body, listType);
+            LanguagesResponse out = new LanguagesResponse();
+            out.setLanguages(langs);
+            return out;
+        }
+        return mapper.readValue(body, LanguagesResponse.class);
     }
 
     public Language getLanguageById(String id) throws IOException, InterruptedException {
