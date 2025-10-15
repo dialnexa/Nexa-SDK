@@ -1,0 +1,23 @@
+{
+  "name": "nexa-sdk-js",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JavaScript SDK for Nexa Languages API",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/languages.js",
+  "types": "dist/languages.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": ["nexa", "sdk", "languages"],
+  "dependencies": {
+    "cross-fetch": "^4.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

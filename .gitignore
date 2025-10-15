@@ -1,0 +1,23 @@
+# Node
+js/node_modules/
+js/npm-debug.log*
+js/yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+python/sdk/*.egg-info/
+python/dist/
+python/build/
+
+# Java / Gradle
+nexa-java/.gradle/
+nexa-java/build/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.env
+.vscode/

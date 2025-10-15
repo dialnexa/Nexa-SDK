@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'application'
+    // id 'com.github.johnrengelman.shadow' version '8.1.0' // optional, for fat JAR
+}
+
+group = 'com.nexa'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JSON parsing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.16.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.16.2'
+
+    // Optional HTTP client (OkHttp) for production
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass.set('com.nexa.sdk.TestLanguages') // your main class
+}
+
+// Optional: create a fat JAR including dependencies
+tasks.named('jar') {
+    manifest {
+        attributes(
+            'Main-Class': 'com.nexa.sdk.TestLanguages'
+        )
+    }
+}
+
+// tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+//     archiveBaseName.set('nexa-sdk')
+//     archiveVersion.set('1.0.0')
+//     archiveClassifier.set('')
+// }
