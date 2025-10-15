@@ -1,31 +1,37 @@
 package com.nexa.sdk;
 
-import java.util.List;
-
 public class TestLanguages {
     public static void main(String[] args) {
         try {
             String apiKey = System.getenv("NEXA_API_KEY");
+            String baseUrl = System.getenv("NEXA_BASE_URL");
             if (apiKey == null || apiKey.isEmpty()) {
                 System.err.println("NEXA_API_KEY is not set.");
                 return;
             }
 
-            LanguagesClient client = new LanguagesClient(apiKey);
+            LanguagesClient client = (baseUrl == null || baseUrl.isEmpty())
+                    ? new LanguagesClient(apiKey)
+                    : new LanguagesClient(apiKey, baseUrl);
+
+            // Optional filter from env var
+            String voiceModelId = System.getenv("NEXA_VOICE_MODEL_ID");
 
             // List languages
-            LanguagesResponse listResponse = client.listLanguages("voice_model_123");
+            LanguagesResponse listResponse = client.listLanguages(voiceModelId);
             System.out.println("Languages list:");
-            listResponse.getLanguages().forEach(lang -> 
-                System.out.println("- " + lang.getId() + ": " + lang.getName())
-            );
+            if (listResponse.getLanguages() != null) {
+                listResponse.getLanguages().forEach(lang ->
+                        System.out.println("- " + lang.getCode() + ": " + lang.getName())
+                );
+            }
 
-            // Get one language by ID
-            if (!listResponse.getLanguages().isEmpty()) {
-                String firstId = listResponse.getLanguages().get(0).getId();
-                Language lang = client.getLanguageById(firstId);
-                System.out.println("\nFirst language details:");
-                System.out.println(lang.getName() + " | " + lang.getDescription());
+            // Optional: get one language by ID passed as first arg
+            if (args.length > 0 && args[0] != null && !args[0].isEmpty() && !"null".equalsIgnoreCase(args[0])) {
+                String languageId = args[0];
+                Language lang = client.getLanguageById(languageId);
+                System.out.println("\nLanguage details:");
+                System.out.println(lang.getCode() + " | " + lang.getName());
             }
 
         } catch (Exception e) {
