@@ -2,7 +2,7 @@
   "name": "nexa-sdk-js",
   "version": "1.0.0",
   "private": true,
-  "description": "JavaScript SDK for Nexa Languages and LLMs",
+  "description": "JavaScript SDK for Nexa APIs (Languages, LLMs, Batch Calls)",
   "license": "MIT",
   "type": "module",
   "main": "dist/languages.js",
@@ -15,7 +15,8 @@
   },
   "keywords": ["nexa", "sdk", "languages"],
   "dependencies": {
-    "cross-fetch": "^4.1.0"
+    "cross-fetch": "^4.1.0",
+    "form-data": "^4.0.4"
   },
   "devDependencies": {
     "typescript": "^5.4.0"
