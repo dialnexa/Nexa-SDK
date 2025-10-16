@@ -10,12 +10,11 @@ function buildUrl(baseUrl, path, params) {
     return url.toString();
 }
 export async function listLanguages({ apiKey, voiceModelId, baseUrl = DEFAULT_BASE_URL, timeoutMs, }) {
-    // if (!voiceModelId)
-    //     throw new Error("voice_model_id is required");
     const controller = typeof AbortController !== "undefined" && timeoutMs ? new AbortController() : undefined;
     const timer = controller && timeoutMs ? setTimeout(() => controller.abort(), timeoutMs) : undefined;
     try {
-        const response = await fetch(buildUrl(baseUrl, "/languages", { voice_model_id: voiceModelId }), {
+        const params = voiceModelId ? { voice_model_id: voiceModelId } : undefined;
+        const response = await fetch(buildUrl(baseUrl, "/languages", params), {
             headers: {
                 Authorization: `Bearer ${apiKey}`,
                 Accept: "application/json",
