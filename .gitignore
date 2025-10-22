@@ -1,24 +1,45 @@
-# Node
-js/node_modules/
-js/npm-debug.log*
-js/yarn-error.log*
-
-# Python
+# Byte-compiled / cache files
 __pycache__/
 *.py[cod]
-python/*.egg-info
-python/sdk/*.egg-info
-python/dist/
-python/build/
+*$py.class
 
-# Java / Gradle
-nexa-java/.gradle/
-nexa-java/build/
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
 
-# OS / Editor
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific
 .DS_Store
 Thumbs.db
-*.swp
-.idea/
-.env
-.vscode/
