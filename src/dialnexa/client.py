@@ -15,7 +15,7 @@ from .agents import AgentsClient
 
 load_dotenv()
 
-DEFAULT_BASE_URL = "http://api.dialnexa.com"
+DEFAULT_BASE_URL = "https://api.dialnexa.com"
 
 
 @dataclass(frozen=True)
