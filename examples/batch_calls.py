@@ -7,7 +7,7 @@ def main(file_path: str):
         print("Usage: python examples/batch_calls.py <file_path>")
         return 1
 
-    client = NexaClient()
+    client = NexaClient(api_key="your_api_key_here", organization_id="your_org_id_here")
 
     agent_id = "agent_mh0k898wyp12l5"
     agent_version_number = 0

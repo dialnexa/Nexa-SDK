@@ -21,11 +21,11 @@ class NexaClient:
         organization_id: Optional[str] = None,
         timeout_ms: Optional[int] = None,
     ) -> None:
-        env_api_key = api_key or os.getenv("NEXA_API_KEY") or ""
-        env_org_id = organization_id or os.getenv("NEXA_ORGANIZATION_ID")
+        env_api_key = api_key or os.getenv("DIALNEXA_API_KEY") or ""
+        env_org_id = organization_id or os.getenv("DIALNEXA_ORGANIZATION_ID")
 
         if not env_api_key:
-            raise ValueError("NEXA_API_KEY is required")
+            raise ValueError("DIALNEXA_API_KEY is required")
 
         self._base_url = DEFAULT_BASE_URL
         self._api_key = env_api_key

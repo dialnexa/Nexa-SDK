@@ -2,7 +2,7 @@ from dialnexa import NexaClient
 
 
 def main():
-    client = NexaClient()
+    client = NexaClient(api_key="your_api_key_here", organization_id="your_org_id_here")
     lang_id = "lang_mgtbeiyplhqcc8"
 
     # list languages

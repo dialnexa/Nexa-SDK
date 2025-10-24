@@ -1,8 +1,5 @@
 ﻿Nexa Python SDK
 ================
-
-Lightweight Python SDK mirroring the TypeScript SDK structure.
-
 Install
 -------
 
@@ -13,15 +10,15 @@ Install
 Environment
 -----------
 
-- `NEXA_API_KEY` (required)
-- `NEXA_ORGANIZATION_ID` (required for Calls, Agents, Batch Calls, Voices)
-- `NEXA_BASE_URL` (optional, default `https://api.dialnexa.com`)
+- `DIALNEXA_API_KEY` (required)
+- `DIALNEXA_ORGANIZATION_ID` (required for Calls, Agents, Batch Calls, Voices)
+- `DIALNEXA_BASE_URL` (optional, default `https://api.dialnexa.com`)
 
 You can place these in a `.env` file in your project root:
 
 ```
-NEXA_API_KEY=your_api_key
-NEXA_ORGANIZATION_ID=your_encrypted_org_id
+DIALNEXA_API_KEY=your_api_key
+DIALNEXA_ORGANIZATION_ID=your_encrypted_org_id
 ```
 
 The SDK automatically loads `.env` when imported.
@@ -39,7 +36,7 @@ client = NexaClient(api_key="your_api_key", organization_id="your_encrypted_org_
 # from dotenv import load_dotenv
 # load_dotenv()
 # With env set, you can simply do:
-# client = NexaClient()  # reads NEXA_API_KEY, NEXA_ORGANIZATION_ID, NEXA_BASE_URL
+# client = NexaClient(api_key="your_api_key_here", organization_id="your_org_id_here")  # reads DIALNEXA_API_KEY, DIALNEXA_ORGANIZATION_ID, DIALNEXA_BASE_URL
 
 # Languages
 print(client.languages.list())
@@ -87,7 +84,7 @@ print(client.voices.get("voice_abc"))
 Notes
 -----
 
-- The default base URL is `https://api.dialnexa.com`. Override by passing `base_url` to `NexaClient` or setting `NEXA_BASE_URL`.
+- The default base URL is `https://api.dialnexa.com`. Override by passing `base_url` to `NexaClient` or setting `DIALNEXA_BASE_URL`.
 - Timeouts use seconds internally; pass `timeout_ms` to `NexaClient`.
 - Multipart uploads rely on `requests` handling for simplicity.
 

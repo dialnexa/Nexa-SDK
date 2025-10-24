@@ -68,7 +68,7 @@ class HttpClient:
 
     def ensure_org(self) -> None:
         if not self._org:
-            raise ValueError("NEXA_ORGANIZATION_ID is required for this operation")
+            raise ValueError("DIALNEXA_ORGANIZATION_ID is required for this operation")
 
     def get_json(
         self,
