@@ -35,7 +35,7 @@ class BatchCallsClient:
         if not title:
             raise ValueError("title is required")
         if not agent_id:
-            raise ValueError("agentId is required")
+            raise ValueError("agent_id is required")
         if agent_version_number is None or agent_version_number < 0:
             raise ValueError("agentVersionNumber must be >= 0")
 

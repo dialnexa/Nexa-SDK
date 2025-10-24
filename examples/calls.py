@@ -7,17 +7,17 @@ def main():
     # List all existing calls 
     client.calls.list()
 
-    # Fetch specific call by ID
-    call_id = "call_mgtt225elfzbpN"
-    client.calls.get(call_id)
-
-    # Create a new call 
-    client.calls.create(
-        phone_number="+911234567890",
+    #  Create a new call
+    new_call = client.calls.create(
+        phone_number="+918873363790",
         agent_id="agent_mh0k898wyp12l5",
-        agent_version_number=0,
+        agent_version_number=0, # pubished version number 
         metadata={"name": "random"},
     )
+    call_id = new_call.get("id")
+
+    # Fetch call by ID
+    fetched_call = client.calls.get(call_id)
 
     return 0
 
