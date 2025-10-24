@@ -16,16 +16,15 @@ def main():
 
     # Create a new agent
     print("Creating agent:")
-    client.agents.create(payload)
+    created_agent = client.agents.create(payload)
+    agent_id = created_agent.get("id")
+    print(f"Created agent ID: {agent_id}")
 
     # List all agents
     print("\nListing all agents:")
     client.agents.list()
 
-    # Hardcoded agent ID for testing
-    agent_id = "agent_mgunv5s8ikis3a"
-
-    # Fetch details for the hardcoded agent
+    # Fetch details for the created agent
     print(f"\nFetching agent by ID: {agent_id}")
     client.agents.get(agent_id)
 
@@ -35,7 +34,7 @@ def main():
         "title": "Updated Title",
     }
 
-    # Update the agent
+    # Update the created agent
     print(f"\nUpdating agent {agent_id}:")
     client.agents.update(agent_id, update_payload)
 

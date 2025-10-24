@@ -5,6 +5,12 @@ from typing import Any, Dict, Optional
 from .http import HttpClient
 
 
+def _require_fields(fields: Dict[str, Any]) -> None:
+    for name, value in fields.items():
+        if value is None or (isinstance(value, str) and not value.strip()):
+            raise ValueError(f"{name} is required")
+
+
 class CallsClient:
     def __init__(self, http: HttpClient) -> None:
         self._http = http
@@ -31,23 +37,21 @@ class CallsClient:
         phone_number: str,
         agent_id: str,
         metadata: Dict[str, Any],
-        agent_version_number: Optional[int] = None,
+        agent_version_number: int,
     ) -> Dict[str, Any]:
         self._http.ensure_org()
-        if not phone_number:
-            raise ValueError("phone_number is required")
-        if not agent_id:
-            raise ValueError("agent_id is required")
-        if metadata is None:
-            raise ValueError("metadata is required")
-
+        _require_fields({
+            "phone_number": phone_number,
+            "agent_id": agent_id,
+            "metadata": metadata,
+            "agent_version_number": agent_version_number,
+        })
         body: Dict[str, Any] = {
             "phone_number": phone_number,
             "agent_id": agent_id,
             "metadata": metadata,
+            "agent_version_number": agent_version_number,
         }
-        if agent_version_number is not None:
-            body["agent_version_number"] = agent_version_number
         return self._http.post_json("/calls", body, prefix="Calls request failed")
 
     def get(self, call_id: str) -> Dict[str, Any]:

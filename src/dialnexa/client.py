@@ -59,9 +59,9 @@ class NexaClient:
 
 def create_client(init: Optional[ClientInit] = None) -> NexaClient:
     init = init or ClientInit()
-    api_key = init.api_key or os.getenv("NEXA_API_KEY")
-    base_url = init.base_url or DEFAULT_BASE_URL
-    org_id = init.organization_id or os.getenv("NEXA_ORGANIZATION_ID")
+    api_key = os.getenv("NEXA_API_KEY")
+    base_url = DEFAULT_BASE_URL
+    org_id = os.getenv("NEXA_ORGANIZATION_ID")
     timeout_ms = init.timeout_ms
 
     # Only enforce org_id for endpoints that require it within the specific clients.
