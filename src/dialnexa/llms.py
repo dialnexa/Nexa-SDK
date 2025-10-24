@@ -12,9 +12,6 @@ class LlmsClient:
     def list(self) -> List[Dict[str, Any]]:
         return self._http.get_json("/llms", prefix="LLMs request failed")
 
-    def list_array(self) -> List[Dict[str, Any]]:
-        return self.list()
-
     def get(self, llm_id: int | str) -> Dict[str, Any]:
         if llm_id is None:
             raise ValueError("id is required")

@@ -1,8 +1,8 @@
-from dialnexa import create_client
+from dialnexa import NexaClient
 
 
 def main():
-    client = create_client()
+    client = NexaClient()
     lang_id = "lang_mgtbeiyplhqcc8"
 
     # list languages

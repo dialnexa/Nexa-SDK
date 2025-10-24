@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import os
-from dotenv import load_dotenv
-from dataclasses import dataclass
 from typing import Optional
 
 from .http import HttpClient
@@ -13,33 +11,25 @@ from .calls import CallsClient
 from .batch_calls import BatchCallsClient
 from .agents import AgentsClient
 
-load_dotenv()
-
 DEFAULT_BASE_URL = "https://api.dialnexa.com"
-
-
-@dataclass(frozen=True)
-class ClientInit:
-    api_key: Optional[str] = None
-    base_url: Optional[str] = None
-    organization_id: Optional[str] = None
-    timeout_ms: Optional[int] = None
 
 
 class NexaClient:
     def __init__(
         self,
-        api_key: str,
-        base_url: str = DEFAULT_BASE_URL,
+        api_key: Optional[str] = None,
         organization_id: Optional[str] = None,
         timeout_ms: Optional[int] = None,
     ) -> None:
-        if not api_key:
+        env_api_key = api_key or os.getenv("NEXA_API_KEY") or ""
+        env_org_id = organization_id or os.getenv("NEXA_ORGANIZATION_ID")
+
+        if not env_api_key:
             raise ValueError("NEXA_API_KEY is required")
 
-        self._api_key = api_key
-        self._base_url = base_url.rstrip("/") if base_url else DEFAULT_BASE_URL
-        self._organization_id = organization_id
+        self._base_url = DEFAULT_BASE_URL
+        self._api_key = env_api_key
+        self._organization_id = env_org_id
         self._timeout = (timeout_ms / 1000.0) if timeout_ms else None
 
         http = HttpClient(
@@ -55,19 +45,3 @@ class NexaClient:
         self.calls = CallsClient(http)
         self.batch_calls = BatchCallsClient(http)
         self.agents = AgentsClient(http)
-
-
-def create_client(init: Optional[ClientInit] = None) -> NexaClient:
-    init = init or ClientInit()
-    api_key = os.getenv("NEXA_API_KEY")
-    base_url = DEFAULT_BASE_URL
-    org_id = os.getenv("NEXA_ORGANIZATION_ID")
-    timeout_ms = init.timeout_ms
-
-    # Only enforce org_id for endpoints that require it within the specific clients.
-    return NexaClient(
-        api_key=api_key or "",
-        base_url=base_url,
-        organization_id=org_id,
-        timeout_ms=timeout_ms,
-    )

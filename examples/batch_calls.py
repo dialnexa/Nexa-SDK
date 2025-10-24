@@ -1,6 +1,5 @@
 import sys
-import os
-from dialnexa import create_client
+from dialnexa import NexaClient
 
 
 def main(file_path: str):
@@ -8,7 +7,7 @@ def main(file_path: str):
         print("Usage: python examples/batch_calls.py <file_path>")
         return 1
 
-    client = create_client()
+    client = NexaClient()
 
     agent_id = "agent_mh0k898wyp12l5"
     agent_version_number = 0

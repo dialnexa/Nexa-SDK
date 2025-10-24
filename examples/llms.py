@@ -1,8 +1,8 @@
-from dialnexa import create_client
+from dialnexa import NexaClient
 
 
 def main():
-    client = create_client()
+    client = NexaClient()
     llm_id = "llm_mgtbfhomt5523g"
 
   # list llms

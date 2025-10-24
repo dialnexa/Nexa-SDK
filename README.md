@@ -15,6 +15,7 @@ Environment
 
 - `NEXA_API_KEY` (required)
 - `NEXA_ORGANIZATION_ID` (required for Calls, Agents, Batch Calls, Voices)
+- `NEXA_BASE_URL` (optional, default `https://api.dialnexa.com`)
 
 You can place these in a `.env` file in your project root:
 
@@ -29,13 +30,16 @@ Usage
 -----
 
 ```
-from dialnexa import create_client
+from dialnexa import NexaClient
 
-# If you prefer to control loading yourself, you can also do:
+# Option A: pass credentials directly (no .env required)
+client = NexaClient(api_key="your_api_key", organization_id="your_encrypted_org_id")
+
+# Option B: rely on environment (.env is optional)
 # from dotenv import load_dotenv
 # load_dotenv()
-
-client = create_client()
+# With env set, you can simply do:
+# client = NexaClient()  # reads NEXA_API_KEY, NEXA_ORGANIZATION_ID, NEXA_BASE_URL
 
 # Languages
 print(client.languages.list())
@@ -83,7 +87,7 @@ print(client.voices.get("voice_abc"))
 Notes
 -----
 
-- The default base URL is `http://localhost:3005`. Override via `create_client(ClientInit(base_url=...))` if needed.
-- Timeouts use seconds internally; pass `timeout_ms` in `ClientInit`.
+- The default base URL is `https://api.dialnexa.com`. Override by passing `base_url` to `NexaClient` or setting `NEXA_BASE_URL`.
+- Timeouts use seconds internally; pass `timeout_ms` to `NexaClient`.
 - Multipart uploads rely on `requests` handling for simplicity.
 
