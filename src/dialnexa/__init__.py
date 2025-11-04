@@ -2,7 +2,7 @@
 
 Usage:
   from dialnexa import NexaClient
-  client = NexaClient(api_key="...", organization_id="...")
+  client = NexaClient(api_key="...")
   langs = client.languages.list()
 """
 from dotenv import load_dotenv

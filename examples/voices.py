@@ -1,7 +1,7 @@
 from dialnexa import NexaClient
 
 def main():
-    client = NexaClient(api_key="your_api_key_here", organization_id="your_org_id_here")
+    client = NexaClient(api_key="your_api_key_here")
 
     # list voices
     client.voices.list()

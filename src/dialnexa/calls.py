@@ -22,13 +22,17 @@ class CallsClient:
         call_id: Optional[str] = None,
         batch_call_id: Optional[str] = None,
         from_: Optional[str] = None,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
     ) -> Any:
-        self._http.ensure_org()
         params: Dict[str, Any] = {}
         if agent_id: params["agent_id"] = agent_id
         if call_id: params["call_id"] = call_id
         if batch_call_id: params["batch_call_id"] = batch_call_id
         if from_: params["from"] = from_
+        # Apply fallbacks when not provided
+        params["page"] = 1 if page is None else page
+        params["limit"] = 30 if limit is None else limit
         return self._http.get_json("/calls", params=params, prefix="Calls request failed")
 
     def create(
@@ -39,7 +43,6 @@ class CallsClient:
         metadata: Dict[str, Any],
         agent_version_number: int,
     ) -> Dict[str, Any]:
-        self._http.ensure_org()
         _require_fields({
             "phone_number": phone_number,
             "agent_id": agent_id,
@@ -55,7 +58,6 @@ class CallsClient:
         return self._http.post_json("/calls", body, prefix="Calls request failed")
 
     def get(self, call_id: str) -> Dict[str, Any]:
-        self._http.ensure_org()
         if not call_id:
             raise ValueError("id is required")
         return self._http.get_json(f"/calls/{call_id}", prefix="Calls request failed")
