@@ -60,6 +60,14 @@ with open("./leads.csv", "rb") as f:
     resp = client.batch_calls.create(file=f, filename="leads.csv", title="My batch", agent_id="agent_123", agent_version_number=1)
     print(resp)
 
+# List batches (returns id, title, created_at)
+print(client.batch_calls.list(page=1, limit=10, sort_by="created_at", sort_order="DESC"))
+
+# List calls within a batch by ID
+batch_id = resp.get("id") or resp.get("batch_id") or resp.get("data", {}).get("id")
+if batch_id:
+    print(client.batch_calls.get(batch_id, page=1, limit=10))
+
 # Agents
 created_agent = client.agents.create({
     "title": "Customer Support Agent",
