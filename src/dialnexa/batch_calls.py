@@ -29,7 +29,6 @@ class BatchCallsClient:
         agent_version_number: int,
         filename: Optional[str] = None,
     ) -> Dict[str, Any]:
-        self._http.ensure_org()
         if not file:
             raise ValueError("file is required")
         if not title:

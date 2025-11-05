@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import requests
 
@@ -19,21 +19,17 @@ class HttpClient:
         *,
         base_url: str,
         api_key: str,
-        organization_id: Optional[str] = None,
-        timeout: Optional[float] = None,
+        timeout: float | None = None,
     ) -> None:
         self._base = base_url.rstrip("/")
         self._api_key = api_key
-        self._org = organization_id
         self._timeout = timeout
 
-    def _headers(self, extra: Optional[Dict[str, str]] = None) -> Dict[str, str]:
+    def _headers(self, extra: Dict[str, str] | None = None) -> Dict[str, str]:
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Accept": "application/json",
         }
-        if self._org:
-            headers["X-Organization-Id"] = self._org
         if extra:
             headers.update(extra)
         return headers
@@ -66,15 +62,11 @@ class HttpClient:
         self.print_response(data)
         return data
 
-    def ensure_org(self) -> None:
-        if not self._org:
-            raise ValueError("DIALNEXA_ORGANIZATION_ID is required for this operation")
-
     def get_json(
         self,
         path: str,
         *,
-        params: Optional[Dict[str, Any]] = None,
+        params: Dict[str, Any] | None = None,
         prefix: str | None = None,
     ) -> Any:
         url = f"{self._base}{path}"
@@ -101,7 +93,7 @@ class HttpClient:
         )
         return self._handle_json(resp, prefix=prefix)
 
-    def get_api(self, path: str, *, params: Optional[Dict[str, Any]] = None) -> Any:
+    def get_api(self, path: str, *, params: Dict[str, Any] | None = None) -> Any:
         url = f"{self._base}{path}"
         resp = requests.get(url, headers=self._headers(), params=params, timeout=self._timeout)
         return self._handle_api(resp)

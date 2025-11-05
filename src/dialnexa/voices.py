@@ -12,7 +12,6 @@ class VoicesClient:
     def list(self, *, provider_name: Optional[str] = None, accent: Optional[str] = None,
              gender: Optional[str] = None, name: Optional[str] = None,
              page: Optional[int] = None, limit: Optional[int] = None) -> Dict[str, Any]:
-        self._http.ensure_org()
         params: Dict[str, Any] = {}
         if provider_name: params["provider_name"] = provider_name
         if accent: params["accent"] = accent
@@ -23,7 +22,6 @@ class VoicesClient:
         return self._http.get_json("/voices", params=params, prefix="Failed to list voices")
 
     def get(self, voice_id: str) -> Dict[str, Any]:
-        self._http.ensure_org()
         if not voice_id:
             raise ValueError("id is required")
         return self._http.get_json(f"/voices/{voice_id}", prefix="Failed to get voice")

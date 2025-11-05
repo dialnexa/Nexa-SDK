@@ -10,7 +10,6 @@ class AgentsClient:
         self._http = http
 
     def create(self, body: Dict[str, Any]) -> Dict[str, Any]:
-        self._http.ensure_org()
         if not isinstance(body, dict):
             raise ValueError("body is required")
         prompts = body.get("prompts") or {}
@@ -20,17 +19,14 @@ class AgentsClient:
         return self._http.post_api("/agents2", body)
 
     def list(self) -> Dict[str, Any]:
-        self._http.ensure_org()
         return self._http.get_api("/agents2")
 
     def get(self, agent_id: str) -> Dict[str, Any]:
-        self._http.ensure_org()
         if not agent_id:
             raise ValueError("id is required")
         return self._http.get_api(f"/agents2/{agent_id}")
 
     def update(self, agent_id: str, body: Dict[str, Any]) -> Dict[str, Any]:
-        self._http.ensure_org()
         if not agent_id:
             raise ValueError("id is required")
         if not isinstance(body, dict):

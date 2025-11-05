@@ -11,14 +11,12 @@ Environment
 -----------
 
 - `DIALNEXA_API_KEY` (required)
-- `DIALNEXA_ORGANIZATION_ID` (required for Calls, Agents, Batch Calls, Voices)
 - `DIALNEXA_BASE_URL` (optional, default `https://api.dialnexa.com`)
 
-You can place these in a `.env` file in your project root:
+You can place this in a `.env` file in your project root:
 
 ```
 DIALNEXA_API_KEY=your_api_key
-DIALNEXA_ORGANIZATION_ID=your_encrypted_org_id
 ```
 
 The SDK automatically loads `.env` when imported.
@@ -30,13 +28,13 @@ Usage
 from dialnexa import NexaClient
 
 # Option A: pass credentials directly (no .env required)
-client = NexaClient(api_key="your_api_key", organization_id="your_encrypted_org_id")
+client = NexaClient(api_key="your_api_key")
 
 # Option B: rely on environment (.env is optional)
 # from dotenv import load_dotenv
 # load_dotenv()
 # With env set, you can simply do:
-# client = NexaClient(api_key="your_api_key_here", organization_id="your_org_id_here")  # reads DIALNEXA_API_KEY, DIALNEXA_ORGANIZATION_ID, DIALNEXA_BASE_URL
+# client = NexaClient(api_key="your_api_key_here")  # reads DIALNEXA_API_KEY, DIALNEXA_BASE_URL
 
 # Languages
 print(client.languages.list())
@@ -47,6 +45,8 @@ print(client.llms.list())
 print(client.llms.get("llm_123"))
 
 # Calls
+# List calls (pagination: defaults page=1, limit=30)
+print(client.calls.list(page=1, limit=30))
 created = client.calls.create(
     phone_number="+15555551234",
     agent_id="agent_123",

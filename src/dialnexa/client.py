@@ -18,24 +18,20 @@ class NexaClient:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        organization_id: Optional[str] = None,
         timeout_ms: Optional[int] = None,
     ) -> None:
         env_api_key = api_key or os.getenv("DIALNEXA_API_KEY") or ""
-        env_org_id = organization_id or os.getenv("DIALNEXA_ORGANIZATION_ID")
 
         if not env_api_key:
             raise ValueError("DIALNEXA_API_KEY is required")
 
         self._base_url = DEFAULT_BASE_URL
         self._api_key = env_api_key
-        self._organization_id = env_org_id
         self._timeout = (timeout_ms / 1000.0) if timeout_ms else None
 
         http = HttpClient(
             base_url=self._base_url,
             api_key=self._api_key,
-            organization_id=self._organization_id,
             timeout=self._timeout,
         )
 
