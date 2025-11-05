@@ -20,6 +20,38 @@ class BatchCallsClient:
     def __init__(self, http: HttpClient) -> None:
         self._http = http
 
+    def list(
+        self,
+        *,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort_by: Optional[str] = None,
+        sort_order: Optional[str] = None,
+    ) -> Any:
+        params: Dict[str, Any] = {}
+        params["page"] = page or 1
+        params["limit"] = limit or 30
+        if sort_by:
+            params["sortBy"] = sort_by
+        if sort_order:
+            params["sortOrder"] = sort_order
+        return self._http.get_json("/batch-calls", params=params, prefix="Batch calls request failed")
+
+    def get(
+        self,
+        batch_id: str,
+        *,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> Any:
+        if not batch_id:
+            raise ValueError("id is required")
+        params: Dict[str, Any] = {
+            "page": page or 1,
+            "limit": limit or 30,
+        }
+        return self._http.get_json(f"/batch-calls/{batch_id}", params=params, prefix="Batch calls request failed")
+
     def create(
         self,
         *,
